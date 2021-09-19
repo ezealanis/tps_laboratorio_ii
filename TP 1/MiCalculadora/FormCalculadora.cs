@@ -21,6 +21,8 @@ namespace MiCalculadora
         private void FormCalculadora_Load(object sender, EventArgs e)
         {
             this.Limpiar();
+            this.btnConvertirABinario.Enabled = false;
+            this.btnConvertirADecimal.Enabled = false;
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -37,10 +39,14 @@ namespace MiCalculadora
         {
             string registro;
 
+            this.ValidarCampos();
+
             this.lblResultado.Text = Operar(this.txtNumero1.Text, this.txtNumero2.Text, this.cmbOperador.Text).ToString();
 
             registro = $"{this.txtNumero1.Text} {this.cmbOperador.Text} {this.txtNumero2.Text} = {this.lblResultado.Text}";
             this.lstOperaciones.Items.Add(registro);
+
+            this.btnConvertirABinario.Enabled = true;
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -131,6 +137,28 @@ namespace MiCalculadora
             if (resultado == DialogResult.No)
             {
                 e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// Corrige los campos de texto en caso de que no se ingresen numeros, para que no queden en el historial.
+        /// Corrige el combobox en caso de que no se ingrese signo.
+        /// </summary>
+        private void ValidarCampos()
+        {
+            if (!this.txtNumero1.Text.All(char.IsDigit))
+            {
+                this.txtNumero1.Text = "0";
+            }
+
+            if (!this.txtNumero2.Text.All(char.IsDigit))
+            {
+                this.txtNumero2.Text = "0";
+            }
+
+            if(this.cmbOperador.SelectedIndex == 0)
+            {
+                this.cmbOperador.SelectedIndex = 1;
             }
         }
     }

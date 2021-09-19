@@ -12,9 +12,9 @@ namespace Entidades
         {            
         }
 
-        public Operando(double numero)
+        public Operando(double numero) : this(numero.ToString())
         {
-            this.numero = numero;
+            
         }
 
         public Operando(string strNumero)
@@ -147,7 +147,7 @@ namespace Entidades
         {
             if (!double.TryParse(strNumero, out double retorno))
             {
-                retorno = 0;
+                return 0;
             }
 
             return retorno;
